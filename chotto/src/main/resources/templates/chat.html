@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Chat</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .messages {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+        .message {
+            padding: 1rem;
+            border: 1px solid #ccc;
+            margin-bottom: 0.5rem;
+        }
+        form {
+            display: flex;
+            justify-content: space-between;
+        }
+        input[type="text"] {
+            flex: 1;
+            margin-right: 1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Welcome, <span th:text="${session.name}">[User]</span>!</h1>
+    <ul class="messages">
+        <li class="message" th:each="message : ${messages}">
+            <span th:text="${#temporals.format(message.timestamp, 'yyyy-MM-dd HH:mm')}">[Timestamp]</span>
+            <span th:text="${message.text}">[Message]</span>
+        </li>
+    </ul>
+    <form th:action="@{/send-message}" method="post">
+        <input type="text" name="message" placeholder="Type your message"/>
+        <button type="submit">Send</button>
+    </form>
+</div>
+</body>
+</html>
